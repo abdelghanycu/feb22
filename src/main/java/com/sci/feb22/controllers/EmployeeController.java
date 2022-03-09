@@ -1,10 +1,14 @@
 package com.sci.feb22.controllers;
 
+import com.sci.feb22.dto.request.EmployeeRequest;
+import com.sci.feb22.exceptions.CustomException;
 import com.sci.feb22.models.Employee;
 import com.sci.feb22.services.EmployeeService;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,8 +41,11 @@ public class EmployeeController {
   }
 
   @PostMapping
-  public ResponseEntity<?> createEmployee(@RequestBody Employee employee) {
-    return new ResponseEntity<>(employeeService.createEmployee(employee), HttpStatus.CREATED);
+  public ResponseEntity<?> createEmployee(@Valid @RequestBody EmployeeRequest employeeRequest)
+      throws CustomException {
+    System.out.println("abdelghany");
+    return new ResponseEntity<>(employeeService.createEmployee(employeeRequest),
+        HttpStatus.CREATED);
   }
 
   @PutMapping("/{empId}")
